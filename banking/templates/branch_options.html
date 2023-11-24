@@ -1,0 +1,5 @@
+{% for brn in branches %}
+<option value="{{ brn.id }}">{{ brn.branch}}</option>
+{% endfor %}
+
+<select hx-get="load_branches/" hx-target="#id_branch"></select>
