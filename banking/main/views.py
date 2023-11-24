@@ -8,11 +8,17 @@ from django.views import View
 from .models import *
 from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
+from django.contrib import messages
+
 # Create your views here.
 
 
 def index(req):
     return render(req, 'home.html')
+
+# def index(request):
+#     success_message = request.GET.get('success', None)
+#     return render(request, 'home.html', {'success_message': success_message})
 
 # ---------------------------------
 
@@ -22,10 +28,14 @@ def after_login(request):
         form = ContinueRegisterForm(request.POST)
         if form.is_valid():
             form.instance.user = request.user
-            form.save()  
-            return redirect('home')  
+            form.save()
+            success_message = 'Your application has been submitted successfully.'
+            return render(request, 'home.html', {'success_message': success_message})
+        else:
+            messages.error(request, 'There was an error in your submission. Please check the form.')
     else:
         form = ContinueRegisterForm()
+
     return render(request, 'after_login.html', {'form': form})
 
 def load_branches(request):

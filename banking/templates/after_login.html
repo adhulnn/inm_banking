@@ -64,14 +64,93 @@
       {% endif %}
   </p>
   <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-          <form method="post" id="aflgForm" novalidate>
-              {% csrf_token %}
-              {{ form.as_p }}
-              <button type="submit">Submit</button>
-          </form>
-      </div>
+    <div class="card card-body">
+      <form method="post" id="aflgForm" novalidate>
+        {% csrf_token %}
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left">Name :</p>
+                {{ form.name }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left">Date of Birth :</p>
+                {{ form.dob }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left">Age :</p>
+                {{ form.age }}
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left mt-3">Gender :</p>
+                {{ form.gender }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Email :</p>
+                {{ form.email }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Phone :</p>
+                {{ form.phone }}
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left mt-3">District :</p>
+                {{ form.district }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Branch :</p>
+                {{ form.branch }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Materials provide :</p>
+                <div class="form-check">
+                    {% for material in form.materials_provide %}
+                        <div class="form-check-inline">
+                            {{ material }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left">Account type :</p>
+                {{ form.account_type }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left">Address :</p>
+                {{ form.address }}
+            </div>
+        </div><br>
+    
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    
+  </div>
+  
   </div>
 </div>
+<script>
+  document.getElementById("id_dob").addEventListener("change", function() {
+      var dob = new Date(this.value);
+      var today = new Date();
+      var age = today.getFullYear() - dob.getFullYear();
+      var monthDiff = today.getMonth() - dob.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+          age--;
+      }
+
+      document.getElementById("id_age").value = age;
+  });
+</script>
 
 <{% endblock %}

@@ -30,7 +30,7 @@ class Continue_register(models.Model):
     address = models.CharField(max_length=100)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
-    account_type = models.CharField(max_length=100, default=None)
+    account_type = models.CharField(max_length=100, default=None, choices=[('current_account','Current account'),('savings','Savings account'),('fd','Fixed deposit accoutnt'),('nri','NRI accounts')])
     materials_provide = models.CharField(max_length=100, default=None)
 
 
