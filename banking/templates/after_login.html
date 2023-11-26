@@ -1,11 +1,17 @@
-<!-- new_page.html -->
-
 {% extends 'base.html' %}
-
+{%load static%}
 {% block content %}
+<head>
+    <style>
+        body {
+            background-image: url('{% static "images/lgb.jpg" %}');
+            background-size: auto;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Banking</a>
-    <!-- <h3 class="text-white">Nav</h3> -->
+    <a class="navbar-brand" href="{% url 'home' %}">OpenBank</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -37,6 +43,9 @@
         <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
             <li class="nav-item active">
+                <a class="nav-link">Hello {{ user.username }}, </a>
+            </li>
+            <li class="nav-item active">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
             {%else%}
@@ -53,90 +62,80 @@
     </div>
 </nav>
 <div class="container mt-5 text-center">
-  <h2>Welcome, {{ user.username }}!</h2>
   <p>
       {% if user.continue_register %}
-          <p>Your application is being processed. <a href="{% url 'home' %}">Go back to home</a></p>
+          <h2 class="">Your application is being processed.</h2>
+          <h4><a href="{% url 'home' %}">go back to home</a></h4>
       {% else %}
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Click here to continue
-          </button>
-      {% endif %}
-  </p>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      <form method="post" id="aflgForm" novalidate>
-        {% csrf_token %}
-    
-        <div class="row">
-            <div class="col-md-4">
-                <p class="text-left">Name :</p>
-                {{ form.name }}
-            </div>
-            <div class="col-md-4">
-                <p class="text-left">Date of Birth :</p>
-                {{ form.dob }}
-            </div>
-            <div class="col-md-4">
-                <p class="text-left">Age :</p>
-                {{ form.age }}
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-4">
-                <p class="text-left mt-3">Gender :</p>
-                {{ form.gender }}
-            </div>
-            <div class="col-md-4">
-                <p class="text-left mt-3">Email :</p>
-                {{ form.email }}
-            </div>
-            <div class="col-md-4">
-                <p class="text-left mt-3">Phone :</p>
-                {{ form.phone }}
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-4">
-                <p class="text-left mt-3">District :</p>
-                {{ form.district }}
-            </div>
-            <div class="col-md-4">
-                <p class="text-left mt-3">Branch :</p>
-                {{ form.branch }}
-            </div>
-            <div class="col-md-4">
-                <p class="text-left mt-3">Materials provide :</p>
-                <div class="form-check">
-                    {% for material in form.materials_provide %}
-                        <div class="form-check-inline">
-                            {{ material }}
-                        </div>
-                    {% endfor %}
+        <form method="post" id="aflgForm">
+            {% csrf_token %}
+        
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="text-left">Name :</p>
+                    {{ form.name }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left">Date of Birth :</p>
+                    {{ form.dob }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left">Age :</p>
+                    {{ form.age }}
                 </div>
             </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-4">
-                <p class="text-left">Account type :</p>
-                {{ form.account_type }}
+        
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="text-left mt-3">Gender :</p>
+                    {{ form.gender }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left mt-3">Email :</p>
+                    {{ form.email }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left mt-3">Phone :</p>
+                    {{ form.phone }}
+                </div>
             </div>
-            <div class="col-md-4">
-                <p class="text-left">Address :</p>
-                {{ form.address }}
+        
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="text-left mt-3">District :</p>
+                    {{ form.district }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left mt-3">Branch :</p>
+                    {{ form.branch }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left mt-3">Materials provide :</p>
+                    <div class="form-check">
+                        {% for material in form.materials_provide %}
+                            <div class="form-check-inline">
+                                {{ material }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div><br>
-    
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    
-    
-  </div>
-  
-  </div>
+        
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="text-left">Account type :</p>
+                    {{ form.account_type }}
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left">Address :</p>
+                    {{ form.address }}
+                </div>
+            </div><br>
+        
+            <button type="submit" class="btn btn-primary">Continue</button>
+        </form>
+      {% endif %}
+  </p>
 </div>
 <script>
   document.getElementById("id_dob").addEventListener("change", function() {

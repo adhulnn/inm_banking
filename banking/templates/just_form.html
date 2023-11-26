@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block content %}
+<head>
+    <style>
+        body {
+            background-image: url('{% static "images/lgb.jpg" %}');
+            background-size: auto;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'home' %}">OpenBank</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!-- <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li> -->
+        
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Branches
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="https://en.wikipedia.org/wiki/Wayanad_district">Wayanad</a>
+            <a class="dropdown-item" href="https://en.wikipedia.org/wiki/Kozhikode">Kozhikode</a>
+            <a class="dropdown-item" href="https://en.wikipedia.org/wiki/Malappuram">Malappuram</a>
+            <a class="dropdown-item" href="https://en.wikipedia.org/wiki/Eranakulam">Eranakulam</a>
+            <a class="dropdown-item" href="https://en.wikipedia.org/wiki/Palakkad">Palakkad</a>
+          </div>
+        </li>
+        
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li> -->
+      </ul>
+      <div class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item active">
+                <a class="nav-link">Hello {{ user.username }}, </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {%endif%}
+        </ul>
+       
+    </div>
+    </div>
+</nav>
+<div class="container mt-5 text-center">
+    <form method="post" id="aflgForm">
+        {% csrf_token %}
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left">Name :</p>
+                {{ form.name }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left">Date of Birth :</p>
+                {{ form.dob }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left">Age :</p>
+                {{ form.age }}
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left mt-3">Gender :</p>
+                {{ form.gender }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Email :</p>
+                {{ form.email }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Phone :</p>
+                {{ form.phone }}
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left mt-3">District :</p>
+                {{ form.district }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Branch :</p>
+                {{ form.branch }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left mt-3">Materials provide :</p>
+                <div class="form-check">
+                    {% for material in form.materials_provide %}
+                        <div class="form-check-inline">
+                            {{ material }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-left">Account type :</p>
+                {{ form.account_type }}
+            </div>
+            <div class="col-md-4">
+                <p class="text-left">Address :</p>
+                {{ form.address }}
+            </div>
+        </div><br>
+    
+        <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+</div>
+<script>
+  document.getElementById("id_dob").addEventListener("change", function() {
+      var dob = new Date(this.value);
+      var today = new Date();
+      var age = today.getFullYear() - dob.getFullYear();
+      var monthDiff = today.getMonth() - dob.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+          age--;
+      }
+
+      document.getElementById("id_age").value = age;
+  });
+</script>
+
+<{% endblock %}

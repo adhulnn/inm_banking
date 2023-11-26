@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
-
+{%load static%}
 {% block content %}
+<head>
+    <style>
+        body {
+            background-image: url('{% static "images/lgb.jpg" %}');
+            background-size:auto;
+            background-repeat: no-repeat;
+        }
+        
+    </style>
+</head>
 <div class="container mt-5">
     <div class="col-md-6 offset-md-3">
         <div class="card">
             <div class="card-body">
-                <h2 class="mb-4 text-center">Login</h2>
-                <form method="post" action="{% url 'login' %}" class="needs-validation" novalidate>
+                <h2 class="mb-4 text-center display-4">Login</h2>
+                <form method="post" action="{% url 'login' %}" class="needs-validation">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ form.username.id_for_label }}">Username</label>

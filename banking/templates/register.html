@@ -1,34 +1,44 @@
 {% extends 'base.html' %}
-
+{%load static%}
 {% block content %}
+<head>
+    <style>
+        body {
+            background-image: url('{% static "images/lgb.jpg" %}');
+            background-size:auto;
+            background-repeat: no-repeat;
+        }
+        
+    </style>
+</head>
 <div class="container mt-5">
     <div class="col-md-6 offset-md-3">
         <div class="card">
             <div class="card-body">
-                <h2 class="mb-4 text-center">Register</h2>
-                <form method="post" action="{% url 'register' %}" class="needs-validation" novalidate>
+                <h2 class="mb-4 text-center display-4">Register</h2>
+                <form method="post" action="{% url 'register' %}" class="needs-validation">
                     {% csrf_token %}
                     
                     <div class="form-group">
-                        <label for="{{ form.username.id_for_label }}">Username</label><br>
+                        <label for="{{ form.username.id_for_label }}"><b>Username</b></label><br>
                         {{ form.username }}
                         <div class="invalid-feedback">
                             Please choose a username.
                         </div>
                     </div>
 
-
-
                     <div class="form-group">
-                        <label for="{{ form.password1.id_for_label }}">Password</label><br>
-                        {{ form.password1 }}
+                        <label for="{{ form.password1.id_for_label }}"><b>Password</b> </label><br>
+                        {{ form.password1 }}# password must contain atleast 8 letters <br>
+                         # include special characters and numbers
+
                         <div class="invalid-feedback">
                             Please enter a password.
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="{{ form.password2.id_for_label }}">Confirm Password</label><br>
+                        <label for="{{ form.password2.id_for_label }}"><b>Confirm Password</b></label><br>
                         {{ form.password2 }}
                         <div class="invalid-feedback">
                             Please confirm your password.

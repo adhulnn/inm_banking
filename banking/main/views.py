@@ -21,6 +21,19 @@ def index(req):
 #     return render(request, 'home.html', {'success_message': success_message})
 
 # ---------------------------------
+@login_required
+def mediator(req):
+    if req.method == 'POST':
+        form = ContinueRegisterForm(req.POST)
+        if form.is_valid():
+            form.instance.user = req.user
+            form.save()
+            return redirect('medium')
+        else:
+            messages.error(req, 'There was an error in your submission. Please check the form.')
+    else:
+        form = ContinueRegisterForm()
+    return render(req,'just_form.html', {'form': form})
 
 @login_required
 def after_login(request):
@@ -30,7 +43,7 @@ def after_login(request):
             form.instance.user = request.user
             form.save()
             success_message = 'Your application has been submitted successfully.'
-            return render(request, 'home.html', {'success_message': success_message})
+            return render(request, 'medium.html', {'success_message': success_message})
         else:
             messages.error(request, 'There was an error in your submission. Please check the form.')
     else:
@@ -50,7 +63,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('after_login')
+            return redirect('home')
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form': form})

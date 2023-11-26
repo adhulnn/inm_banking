@@ -1,12 +1,26 @@
 {%extends 'base.html' %}
+{% load static %}
 {%block title%}
     Banking - Home
 {%endblock%}
 {% block content %}
-
+<head>
+    <style>
+        body {
+            background-image: url('{% static "images/How-to-build-payment-gateway-1.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .open-account-btn {
+            border-radius: 50px;
+            padding: 1%;
+            font-size: 20px;
+        }
+    </style>
+</head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Banking</a>
+        <a class="navbar-brand" href="{% url 'home' %}">OpenBank</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,11 +48,17 @@
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item active">
+                    <a class="nav-link">Hello {{ user.username }}, </a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
                 {%else%}
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
                 </li>
                 {%endif%}
             </ul>
@@ -48,19 +68,18 @@
     </nav>
 
 
-    <div class="text-center mt-5">
+    <div class="m-5">
         
         {% if user.is_authenticated %}
-             <h2>Welcome, <b>{{ user.username }}</b>, happy banking. </h2> 
+            <p class="display-3 text-light">Open Bank </p>
+            <p class="display-4">The future of banking </p>
+            <a class="btn btn-primary open-account-btn" href="{% url 'after_login' %}">Open account</a>
         {% else %}
-            <h2>Please <a href="{% url 'login' %}">log in</a> to access the content.</h2>
+            <p class="display-3 text-light">Open Bank </p>
+            <p class="display-4">The future of banking </p>
+            <a class="btn btn-primary open-account-btn" href="{% url 'login' %}">Open account</a>
         {% endif %}
     </div>
-    {% if success_message %}
-        <div class="alert alert-success text-center mt-3">
-            {{ success_message }}
-        </div>
-    {% endif %}
         
 </body>
 {%endblock%}
